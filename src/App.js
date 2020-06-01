@@ -3,6 +3,7 @@ import './App.css';
 
 // Components Import
 import { CardList } from './components/card-list/card-list.component'
+import { SearchBox } from './components/search-box/search-box.component';
 
 class App extends Component {
 
@@ -12,6 +13,9 @@ class App extends Component {
       monsters: [], 
       searchField: ''
     }
+
+    // TODO: Remove this to follow ES6 arrow functions
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -20,19 +24,19 @@ class App extends Component {
      .then(users => this.setState({ monsters: users }));
   }
 
+  handleChange(event) {
+    this.setState({ searchField: event.target.value }, () => console.log(this.state))
+  }
+
   render () {
     const { monsters, searchField } = this.state;
     const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()));
 
     return (
       <div className="App">
-        <input type='search'
-               placeholder='Search Monster'
-               onChange={event => {
-                 this.setState({ searchField: event.target.value }, () => console.log(this.state))
-                }
-               }
-        />
+        <SearchBox placeholder='Search Monster'
+                   handleChange={this.handleChange}
+        ></SearchBox>
 
         <CardList monsters={filteredMonsters}></CardList>
       </div>
