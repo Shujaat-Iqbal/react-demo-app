@@ -13,9 +13,6 @@ class App extends Component {
       monsters: [], 
       searchField: ''
     }
-
-    // TODO: Remove this to follow ES6 arrow functions
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +21,7 @@ class App extends Component {
      .then(users => this.setState({ monsters: users }));
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ searchField: event.target.value }, () => console.log(this.state))
   }
 
@@ -34,6 +31,8 @@ class App extends Component {
 
     return (
       <div className="App">
+        <h1>Monster Rolodex</h1>
+
         <SearchBox placeholder='Search Monster'
                    handleChange={this.handleChange}
         ></SearchBox>
